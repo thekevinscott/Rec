@@ -36,18 +36,23 @@ define([
 				
 				var user = this.base.state.get('user');
 				// debugger;
-				console.log('user sports', user.get('sports'));
+				// console.log('user sports', user.get('sports'));
 				// var userSports;
 
 				// var userSports = user.get('sports');
 				_.each(this.sports.models, function(sport) {
-					
-					var $sport = $(_.template( this.sportTemplate, { 
+
+					var selected = _.find(user.get('sport'), function(obj){ return ( obj.title === sport.get('title') ); } ) ? true : false;
+					var props = {
 						sport: _.extend(sport.attributes,{ 
 							slug: sport.slug(), 
-							// selected: _.contains(userSports, sport.get('title')) 
+							selected: selected
 						})
-					}));
+					};
+
+					//_.findWhere(publicServicePulitzers, {newsroom: "The New York Times"});
+
+					var $sport = $(_.template( this.sportTemplate, props));
 
 					this.$sports.append( $sport );
 					$sport.click(function(e){
@@ -88,8 +93,10 @@ define([
 				var user = this.base.state.get('user');
 
 				var callbacks = {
-					success: function( user ){
-						console.log('success',user);
+					success: function( user, result, options ){
+						
+						// console.debug(user.toJSON());
+						console.log('success',arguments);
 						// debugger;
 					},
 					error: function(resp) {
@@ -99,9 +106,13 @@ define([
 				};
 
 				if ( val ) {
-					user.appendAndSave('sport', [sport], callbacks);
+
+					// sport = this.sports.models[0];
+
+					user.appendAndSave('sport', [sport.get('sport_id')], callbacks);
+
 				} else {
-					user.deleteAndSave('sport', [sport.get(sport.idAttribute.toLowerCase())], StackMob.SOFT_DELETE, callbacks);
+					user.deleteAndSave('sport', [sport.get('sport_id')], StackMob.SOFT_DELETE, callbacks);
 				}
 				
 				
@@ -119,7 +130,7 @@ define([
 				// 	user.set('sports', []);
 					
 				// }
-				user.save();
+				// user.save();
 
 			}
 		});

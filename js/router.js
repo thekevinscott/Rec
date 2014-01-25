@@ -36,6 +36,7 @@ define([
 				
 			},
 			error: function(err) {
+
 				dfd.reject(err);
 			}
 		});
@@ -53,7 +54,9 @@ define([
 				dfd.reject(2);
 
 			}).fail(function(err){
+				// either the service failed or the user got deleted
 				console.log('err',err);
+				dfd.reject(1);
 			});
 		}).fail(function(err){
 			if ( err ) {

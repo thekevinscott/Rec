@@ -28,26 +28,42 @@ define([
 
 
 			FB.login(function(response) {
+
 				if (response.authResponse) {
 					
 					var accessToken = response.authResponse.accessToken;
-					var user = new StackMob.User();
+					this.base.state.set('user',new StackMob.User());
 
 					FB.api('/me', function(response){
-
-						var keys = ['first_name','last_name','gender','birthday','location','link','username','timezone'];
+						// debugger;
+						var keys = ['first_name','last_name','gender','birthday','location','username','timezone'];
 						_.each(keys, function(key) {
-							user.set(key, response[key]);
-						});
-						user.loginWithFacebookAutoCreate(accessToken, true); //true, stay logged in.
+							this.base.state.get('user').set(key, response[key]);
+						}.bind(this));
+						this.base.state.get('user').set('sports',[]);
 						
+						this.base.state.get('user').loginWithFacebookAutoCreate(accessToken, true); //true, stay logged in.
+						
+						var attb = this.base.state.get('user').attributes;
+						
+						var user = new StackMob.User( { 
+							username: attb.username, 
+							first_name: attb.first_name,
+							last_name: attb.last_name,
+							gender: attb.gender,
+							birthday: attb.birthday,
+							// location: attb.location,
+							timezone: attb.timezone,
+							link: attb.link
+						});
+						user.save();
+
 						this.parent.next();
 
-						// user.save();
+						// this.base.state.get('user').save();
 					}.bind(this));
 
 				} else {
-					debugger;
 					this.error(user,error);
 				}
 			}.bind(this), {scope: 'email'});
