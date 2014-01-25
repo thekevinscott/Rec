@@ -1,0 +1,79 @@
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="js/lib/parse-1.2.16.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	  <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+        Parse.FacebookUtils.init({
+            appId      : '131362800367499', // Facebook App ID
+            channelUrl : '//localhost/channel.html', // Channel File
+            cookie     : true, // enable cookies to allow Parse to access the session
+            xfbml      : true  // parse XFBML
+          });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/all.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
+	<script type="text/javascript">Parse.initialize("QVPeNvBhSGyv4Ana4vi3Xz5CIHxAnqZpigiykQc1", "Wk1R1AFlII3AvGC7sMJCIpaBRthZDabRwc5SJOPx");</script>
+</head>
+<body>
+<div id="msg">Msg</div>
+<script type="text/javascript">
+	var logout = function() {
+		Parse.User.logOut();
+		window.location.reload();
+	};
+	var login = function() {
+		Parse.FacebookUtils.logIn(null, {
+		  success: function(user) {
+		  	// update facebook every time
+		  	FB.api('/me', function(response){ 
+		  		var keys = ['first_name','last_name','gender','birthday','location','link','username','timezone',];
+		  		for (var i=0;i<keys.length;i++) {
+		  			var key = keys[i];
+		  			user.set(key, response[key]);	
+		  		}
+		  		user.save(null, {
+		  		      success: function(user) {
+		  		        
+		  		    }});
+		  	});
+		  	console.log(user);
+
+		    if (!user.existed()) {
+		      $('#msg').html("User signed up and logged in through Facebook!");
+		      
+		    } else {
+		      $('#msg').html("User logged in through Facebook!");
+		      
+		      
+		    }
+		    $('#msg').append('User:' + user.get('username')+'. Logout');
+		  },
+		  error: function(user, error) {
+		    $('#msg').html("User cancelled the Facebook login or did not fully authorize.");
+		  }
+		});
+	};
+	var currentUser = Parse.User.current();
+	if ( !currentUser || currentUser.authenticated() === false ) {
+
+		$('#msg').html('Login via Facebook');
+		$('#msg').click(login);
+	} else {
+		console.log(currentUser);
+		$('#msg').html('User:' + currentUser.username+'. Logout');
+		$('#msg').click(logout);
+	}
+</script>
+
+</body>
+</html>
