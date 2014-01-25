@@ -72,46 +72,58 @@ module.exports = function(grunt) {
     requirejs: {
       compile: {
         options: {
-          baseUrl: "./",
-          mainConfigFile: "js/main.js",
-          // optimize: "uglify",
-          // name: "js/lib/almond/almond.js", // assumes a production build using almond
-          modules: [
-          {
-              name: "js/main.js",
-          }],
-          dir: 'build',
+          almond: true,
+          baseUrl: './js/',
+          findNestedDependencies: true,
+          mainConfigFile: 'js/main.js',
+          name : 'main',
+          out: 'js/app.min.js',
+          optimize: 'uglify',
+          preserveLicenseComments: false,
+          relativeUrl: './',
+          skipDirOptimize: true,
+          useStrict: true
 
-          // out: "js/app.min.js",
-          uglify: {
-              toplevel: true,
-              ascii_only: true,
-              beautify: true,
-              max_line_length: 1000,
+          // baseUrl: "./",
+          // mainConfigFile: "js/main.js",
+          // // optimize: "uglify",
+          // // name: "js/lib/almond/almond.js", // assumes a production build using almond
+          // modules: [
+          // {
+          //     name: "js/main.js",
+          // }],
+          // dir: 'build',
 
-              //How to pass uglifyjs defined symbols for AST symbol replacement,
-              //see "defines" options for ast_mangle in the uglifys docs.
-              defines: {
-                  DEBUG: ['name', 'false']
-              },
+          // // out: "js/app.min.js",
+          // uglify: {
+          //     toplevel: true,
+          //     ascii_only: true,
+          //     beautify: true,
+          //     max_line_length: 1000,
 
-              //Custom value supported by r.js but done differently
-              //in uglifyjs directly:
-              //Skip the processor.ast_mangle() part of the uglify call (r.js 2.0.5+)
-              no_mangle: true
-          },
+          //     //How to pass uglifyjs defined symbols for AST symbol replacement,
+          //     //see "defines" options for ast_mangle in the uglifys docs.
+          //     defines: {
+          //         DEBUG: ['name', 'false']
+          //     },
 
-          // done: function(done, output) {
-          //   var duplicates = require('rjs-build-analysis').duplicates(output);
+          //     //Custom value supported by r.js but done differently
+          //     //in uglifyjs directly:
+          //     //Skip the processor.ast_mangle() part of the uglify call (r.js 2.0.5+)
+          //     no_mangle: true
+          // },
 
-          //   if (duplicates.length > 0) {
-          //     grunt.log.subhead('Duplicates found in requirejs build:');
-          //     grunt.log.warn(duplicates);
-          //     done(new Error('r.js built duplicate modules, please check the excludes option.'));
-          //   }
+          // // done: function(done, output) {
+          // //   var duplicates = require('rjs-build-analysis').duplicates(output);
 
-          //   done();
-          // }
+          // //   if (duplicates.length > 0) {
+          // //     grunt.log.subhead('Duplicates found in requirejs build:');
+          // //     grunt.log.warn(duplicates);
+          // //     done(new Error('r.js built duplicate modules, please check the excludes option.'));
+          // //   }
+
+          // //   done();
+          // // }
         }
       }
     }

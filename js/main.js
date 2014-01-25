@@ -1,3 +1,4 @@
+
 require.config({
 	urlArgs: "bust=" + (new Date()).getTime(),
 	paths: {
@@ -8,7 +9,7 @@ require.config({
 		text : 'lib/requirejs-text/text',
 		fastclick: 'lib/fastclick/lib/fastclick',
 		q: 'lib/q/q',
-		parse: 'lib/parse-1.2.16'
+		parse: 'lib/parse-1.2.16.min'
 	},
 	shim: {
 	    "backbone": {
@@ -26,7 +27,6 @@ require.config({
 
 
 });
-
 
 require([
 	'jquery',
