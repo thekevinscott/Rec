@@ -8,7 +8,8 @@ module.exports = function(grunt) {
     jshint: {
       options: {
         eqeqeq: true,
-        trailing: true
+        trailing: true,
+        ignores: ['js/lib/**/*.js','js/app.min.js']
       },
       target: {
         src : ['js/**/*.js']
@@ -61,12 +62,17 @@ module.exports = function(grunt) {
       }
     },
     watch: {
+      gruntfile: {
+        files: 'Gruntfile.js',
+        tasks: ['jshint'],
+      },
       scripts: {
-        files: ['js/**/*.js','Gruntfile.js'],
+        files: ['js/**/*.js', '!js/lib/**/*.js'],
+        tasks: ['jshint','requirejs'],
       },
       less: {
         files: 'less/**/*.less',
-        tasks: ['less'],
+        tasks: ['less','cssmin'],
       }
     },
     requirejs: {
@@ -84,48 +90,6 @@ module.exports = function(grunt) {
           skipDirOptimize: true,
           useStrict: true,
           include: ['lib/requirejs/require.js']
-
-
-          // baseUrl: "./",
-          // mainConfigFile: "js/main.js",
-          // // optimize: "uglify",
-          // // name: "js/lib/almond/almond.js", // assumes a production build using almond
-          // modules: [
-          // {
-          //     name: "js/main.js",
-          // }],
-          // dir: 'build',
-
-          // // out: "js/app.min.js",
-          // uglify: {
-          //     toplevel: true,
-          //     ascii_only: true,
-          //     beautify: true,
-          //     max_line_length: 1000,
-
-          //     //How to pass uglifyjs defined symbols for AST symbol replacement,
-          //     //see "defines" options for ast_mangle in the uglifys docs.
-          //     defines: {
-          //         DEBUG: ['name', 'false']
-          //     },
-
-          //     //Custom value supported by r.js but done differently
-          //     //in uglifyjs directly:
-          //     //Skip the processor.ast_mangle() part of the uglify call (r.js 2.0.5+)
-          //     no_mangle: true
-          // },
-
-          // // done: function(done, output) {
-          // //   var duplicates = require('rjs-build-analysis').duplicates(output);
-
-          // //   if (duplicates.length > 0) {
-          // //     grunt.log.subhead('Duplicates found in requirejs build:');
-          // //     grunt.log.warn(duplicates);
-          // //     done(new Error('r.js built duplicate modules, please check the excludes option.'));
-          // //   }
-
-          // //   done();
-          // // }
         }
       }
     }
@@ -141,7 +105,7 @@ module.exports = function(grunt) {
 
 
   // grunt.registerTask('deploy', ['less','cssmin']);
-  grunt.registerTask('default', ['requirejs','less','cssmin']);
+  grunt.registerTask('default', ['jshint','requirejs','less','cssmin','watch']);
   
   
 

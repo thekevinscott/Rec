@@ -3,26 +3,24 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'app'
-], function($, _, Backbone, App){
+  'base'
+], function($, _, Backbone, Base){
 
-    var app = new App();
-  	var AppRouter = Backbone.Router.extend({
-	  	routes: {
-			// "demo/:demo_id":  	function(params){ app.demo(params);},
-			"":     			function(params){ app.index();},
-			"*actions" : 		function(params){ app.fourohfour();},
-	  	}
-  	});
+  var base = new Base();
+  var AppRouter = Backbone.Router.extend({
+    routes: {
+      "":function(params){ base.index();},
+      "*actions":function(params){ base.fourohfour();},
+    }
+  });
 
+  var initialize = function(){
+    var app_router = new AppRouter();
+    base.router = app_router;
+    Backbone.history.start();
+  };
 
-	var initialize = function(){
-		var app_router = new AppRouter;
-        app.router = app_router;
-
-		Backbone.history.start();
-  	};
-  	return {
-    	initialize: initialize
-  	};
+  return {
+    initialize: initialize
+  };
 });

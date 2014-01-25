@@ -24,6 +24,7 @@
     "underscore": "~1.5.2"
   },
   "devDependencies": {
-    "requirejs-text": "~2.0.10"
+    "requirejs-text": "~2.0.10",
+    "bootstrap": "~3.0.3"
   }
 }
