@@ -34,6 +34,7 @@ require([
 	'parse',
 	'router'
 ], function($,easing,_,Backbone,FastClick,parse,Router){
+	console.log('Hello, you.');
 	// The "app" dependency is passed in as "App"
 	// App.initialize();
 	$(function() {
