@@ -1,13 +1,14 @@
 define([
+    'config',
     'underscore',
     'backbone',
     'text!templates/application.html'
-], function(_, Backbone, applicationTemplate){
+], function(config, _, Backbone, applicationTemplate){
 
     var App = Backbone.View.extend({
         el: 'body',
+        config: config,
         initialize: function() {
-
         },
         render: function(){
             if ( ! this.$compiledTemplate) {

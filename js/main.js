@@ -8,7 +8,9 @@ require.config({
 		text : 'lib/requirejs-text/text',
 		fastclick: 'lib/fastclick/lib/fastclick',
 		q: 'lib/q/q',
-		parse: 'lib/parse-1.2.16.min'
+		parse: 'lib/parse-1.2.16.min',
+		facebook: '//connect.facebook.net/en_US/all',
+
 	},
 	shim: {
 		"backbone": {
@@ -21,20 +23,32 @@ require.config({
 		},
 		"underscore": {
 			"exports": "_"
-		}
+		},
+		"facebook" : {
+			"exports": "FB"
+		},
+        "parse": {
+		    "deps": ['jquery', 'underscore', 'facebook'],
+            "exports": 'Parse'
+        }
+
 	}
 });
 
+require(['parse','config'], function(Parse,config) {
+    Parse.initialize(config.parse.id,config.parse.key);
+    Parse.FacebookUtils.init(config.facebook);
+});
+
 require([
-	'jquery',
-	'easing',
-	'underscore', // lib/underscore/underscore
-	'backbone',    // lib/backbone/backbone
 	'fastclick',
-	'parse',
-	'router'
-], function($,easing,_,Backbone,FastClick,parse,Router){
+	'jquery',
+	'router',
+	
+], function(Fastclick,$,Router){
 	console.log('Hello, you.');
+
+
 	// The "app" dependency is passed in as "App"
 	// App.initialize();
 	$(function() {

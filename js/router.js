@@ -1,10 +1,10 @@
 define([
+	'config',
 	'jquery',
 	'underscore',
 	'backbone',
 	'base'
-], function($, _, Backbone, Base){
-
+], function(config,$, _, Backbone, Base){
 	var base = new Base();
 	var AppRouter = Backbone.Router.extend({
 		routes: {
