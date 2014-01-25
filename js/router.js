@@ -27,11 +27,13 @@ define([
 	var getUser = function(username) {
 		var dfd = Q.defer();
 		console.log('1');
-		(new StackMob.User({ username: username })).fetch({
+		var depth = 3;
+		(new StackMob.User({ username: username })).fetchExpanded(depth, {
 			success: function(user, result, options) {
 				console.log('2');
 				
 				dfd.resolve(user, result, options);
+				
 			},
 			error: function(err) {
 				dfd.reject(err);

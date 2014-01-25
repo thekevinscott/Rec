@@ -39,9 +39,8 @@ define([
 						_.each(keys, function(key) {
 							user.set(key, response[key]);
 						});
-						// console.log('a');
 						user.loginWithFacebookAutoCreate(accessToken, true); //true, stay logged in.
-						// console.log('b');
+						
 						this.parent.next();
 
 						// user.save();

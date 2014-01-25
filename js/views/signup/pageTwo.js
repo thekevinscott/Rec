@@ -17,8 +17,8 @@ define([
 				this.sports.fetch({
 					success: function(results) {
 						this.renderSports();
-					}.bind(this), error: function() {
-
+					}.bind(this), error: function(err) {
+						console.log('error',err);
 					}
 				});
 			},
@@ -35,11 +35,11 @@ define([
 			renderSports: function() {
 				
 				var user = this.base.state.get('user');
-
 				// debugger;
+				console.log('user sports', user.get('sports'));
 				// var userSports;
 
-				// var userSports = Parse.User.current().get('sports');
+				// var userSports = user.get('sports');
 				_.each(this.sports.models, function(sport) {
 					
 					var $sport = $(_.template( this.sportTemplate, { 
@@ -86,7 +86,7 @@ define([
 
 
 				var user = this.base.state.get('user');
-				
+
 				var callbacks = {
 					success: function( user ){
 						console.log('success',user);
@@ -99,11 +99,9 @@ define([
 				};
 
 				if ( val ) {
-					var sport_id = '13cc8c5a13e8422f992b264959c449be';
-					
-					user.appendAndSave('sports', [sport_id], callbacks);
+					user.appendAndSave('sport', [sport], callbacks);
 				} else {
-					user.deleteAndSave('sports', [sport.get(sport.idAttribute.toLowerCase())], StackMob.SOFT_DELETE, callbacks);
+					user.deleteAndSave('sport', [sport.get(sport.idAttribute.toLowerCase())], StackMob.SOFT_DELETE, callbacks);
 				}
 				
 				
