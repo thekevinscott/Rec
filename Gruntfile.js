@@ -82,7 +82,9 @@ module.exports = function(grunt) {
           preserveLicenseComments: false,
           relativeUrl: './',
           skipDirOptimize: true,
-          useStrict: true
+          useStrict: true,
+          include: ['lib/requirejs/require.js']
+
 
           // baseUrl: "./",
           // mainConfigFile: "js/main.js",
