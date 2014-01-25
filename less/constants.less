@@ -1,0 +1,26 @@
+.radius (@radius: 5px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  -ms-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.circle (@size, @radius: 4px) {
+	border: @radius solid black;
+	text-transform: uppercase;
+	text-align: center;
+	.radius(500px);
+	display: inline-block;
+	margin: 0 auto;
+	width: @size;
+	height: @size;
+	line-height: @size*.9;
+}
+
+/* Micro ClearFix Mixin */
+.clearfix{
+  zoom:1;
+  &:before, &:after{ content:""; display:table; }
+  &:after{ clear: both; }
+}

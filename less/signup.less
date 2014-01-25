@@ -1,0 +1,86 @@
+.signup {
+	.pageOne {
+		padding-top: 120px;	
+	}
+	text-align: center;
+	ul {
+		@li-height: 24px;
+		li {
+			border-bottom: 1px solid black;
+			padding: 10px 0;
+			line-height: @li-height;
+			cursor: pointer;
+
+			&:first-child {
+				border-top: 1px solid black;
+			}
+
+			.clearfix();
+
+
+			input[type=checkbox] {
+				float: left;
+			}
+
+			h2 {
+				display: inline;
+				text-transform: uppercase;
+				font-size: @li-height;
+			}	
+
+			.icon {
+				.circle(20px);
+				float: right;
+			}
+		}
+
+	}
+
+	table.sports {
+		text-align: center;
+		font-size: 16px;
+
+		thead {
+			background: #EEE;
+		}
+
+		td {
+			border: 1px solid #CCC;
+			padding: 10px;
+			border-collapse: collapse;
+		}
+	}
+}
+
+.rec-icon {.circle(120px);}
+
+header {
+	height: 60px;
+	padding-top: 10px;
+	border-bottom: 1px solid black;
+
+	.next {
+		display: inline-block;
+	}
+
+	.progress {
+		.circle(40px, 2px);
+		font-size: 12px;
+		padding-top: 5px;
+		line-height: normal;
+
+	}
+
+	.btn {
+	}
+
+	.previous {
+		float: left;
+	}
+
+	.next {
+		float: right;
+	}
+
+}
+

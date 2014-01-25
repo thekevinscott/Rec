@@ -8,7 +8,7 @@ require.config({
 		text : 'lib/requirejs-text/text',
 		fastclick: 'lib/fastclick/lib/fastclick',
 		q: 'lib/q/q',
-		parse: 'lib/parse-1.2.16.min',
+		stackmob: 'lib/stackmob-js-0.9.2-bundled-min',
 		facebook: '//connect.facebook.net/en_US/all',
 
 	},
@@ -27,25 +27,32 @@ require.config({
 		"facebook" : {
 			"exports": "FB"
 		},
-        "parse": {
-		    "deps": ['jquery', 'underscore', 'facebook'],
-            "exports": 'Parse'
-        }
+		'stackmob': {
+			deps: ['jquery', 'facebook'],
+			exports: 'StackMob'
+		}
 
 	}
 });
 
-require(['parse','config'], function(Parse,config) {
-    Parse.initialize(config.parse.id,config.parse.key);
-    Parse.FacebookUtils.init(config.facebook);
-});
+require(['stackmob','facebook', 'config'], function(StackMob, FB, config) {
+	// debugger;
 
+	StackMob.init({
+	    publicKey: "26ed40e3-c897-4c21-b252-e8878e812e33",
+	    apiVersion: 0
+	});
+
+	FB.init(config.facebook);
+
+});
 require([
 	'fastclick',
 	'jquery',
 	'router',
 	
 ], function(Fastclick,$,Router){
+	
 	console.log('Hello, you.');
 
 

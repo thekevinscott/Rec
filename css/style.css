@@ -14,8 +14,132 @@
 *   Kevin Scott & Josh Coe
 *   
 *****************************************/
+/* Micro ClearFix Mixin */
+.clearfix {
+  zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
 body,
 html {
-  background: #EEE;
+  background: #FFF;
+}
+ul,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.signup {
+  text-align: center;
+}
+.signup .pageOne {
+  padding-top: 120px;
+}
+.signup ul li {
+  border-bottom: 1px solid black;
+  padding: 10px 0;
+  line-height: 24px;
+  cursor: pointer;
+  zoom: 1;
+}
+.signup ul li:first-child {
+  border-top: 1px solid black;
+}
+.signup ul li:before,
+.signup ul li:after {
+  content: "";
+  display: table;
+}
+.signup ul li:after {
+  clear: both;
+}
+.signup ul li input[type=checkbox] {
+  float: left;
+}
+.signup ul li h2 {
+  display: inline;
+  text-transform: uppercase;
+  font-size: 24px;
+}
+.signup ul li .icon {
+  border: 4px solid #000000;
+  text-transform: uppercase;
+  text-align: center;
+  -webkit-border-radius: 500px;
+  -moz-border-radius: 500px;
+  -ms-border-radius: 500px;
+  -o-border-radius: 500px;
+  border-radius: 500px;
+  display: inline-block;
+  margin: 0 auto;
+  width: 20px;
+  height: 20px;
+  line-height: 18px;
+  float: right;
+}
+.signup table.sports {
+  text-align: center;
   font-size: 16px;
+}
+.signup table.sports thead {
+  background: #EEE;
+}
+.signup table.sports td {
+  border: 1px solid #CCC;
+  padding: 10px;
+  border-collapse: collapse;
+}
+.rec-icon {
+  border: 4px solid #000000;
+  text-transform: uppercase;
+  text-align: center;
+  -webkit-border-radius: 500px;
+  -moz-border-radius: 500px;
+  -ms-border-radius: 500px;
+  -o-border-radius: 500px;
+  border-radius: 500px;
+  display: inline-block;
+  margin: 0 auto;
+  width: 120px;
+  height: 120px;
+  line-height: 108px;
+}
+header {
+  height: 60px;
+  padding-top: 10px;
+  border-bottom: 1px solid black;
+}
+header .next {
+  display: inline-block;
+}
+header .progress {
+  border: 2px solid #000000;
+  text-transform: uppercase;
+  text-align: center;
+  -webkit-border-radius: 500px;
+  -moz-border-radius: 500px;
+  -ms-border-radius: 500px;
+  -o-border-radius: 500px;
+  border-radius: 500px;
+  display: inline-block;
+  margin: 0 auto;
+  width: 40px;
+  height: 40px;
+  line-height: 36px;
+  font-size: 12px;
+  padding-top: 5px;
+  line-height: normal;
+}
+header .previous {
+  float: left;
+}
+header .next {
+  float: right;
 }
