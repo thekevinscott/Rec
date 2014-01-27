@@ -9,6 +9,7 @@ define([
 				'click .next' : 'next',
 				'click .previous' : 'previous'
 			},
+			className: 'header',
 			initialize: function( options ) {
 				this.parent = ( options || {} ).parent;
 				this.model = new Backbone.Model({

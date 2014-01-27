@@ -1,11 +1,11 @@
 define([
 	'underscore',
-	'stackmob',
+	'api',
 	'q',
 	'models/sport'
-], function(_, StackMob, Q, SportModel){
+], function(_, API, Q, SportModel){
 	
-	var SportsCollection = StackMob.Collection.extend({
+	var SportsCollection = API.Collection.extend({
 		model: SportModel
 	});
 	return SportsCollection;

@@ -90,28 +90,32 @@ define([
 				input.prop('checked', val );
 
 
-				var user = this.base.state.get('user');
+				
 
 				var callbacks = {
 					success: function( user, result, options ){
-						
+						// debugger;
+						// this.base.state.set('user',user);
 						// console.debug(user.toJSON());
 						console.log('success',arguments);
 						// debugger;
-					},
+					}.bind(this),
 					error: function(resp) {
 						e.preventDefault();
 						this.error(resp.error);
 					}.bind(this)
 				};
 
+				var user = new StackMob.User( { 
+					username: this.base.state.get('user').get('username')
+				});
+				
 				if ( val ) {
-
-					// sport = this.sports.models[0];
 
 					user.appendAndSave('sport', [sport.get('sport_id')], callbacks);
 
 				} else {
+					
 					user.deleteAndSave('sport', [sport.get('sport_id')], StackMob.SOFT_DELETE, callbacks);
 				}
 				

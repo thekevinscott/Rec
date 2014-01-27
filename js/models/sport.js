@@ -1,8 +1,8 @@
 define([
-	'stackmob',
-], function(StackMob){
+	'api',
+], function(API){
 	// debugger;
-	var SportModel = StackMob.Model.extend({
+	var SportModel = API.Model.extend({
 		schemaName: "Sport",
 		slug: function() {
 			return this.get('title').toLowerCase().replace(' ','-');

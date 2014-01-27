@@ -17,7 +17,8 @@ define([
 				this.$el.html(_.template( template ));
 				this.$locations = this.$('.locations');
 
-				var user = Parse.User.current();
+				var user = this.base.state.get('user');
+				
 				if ( !user.get('locations') ) {
 					user.set('locations',[]);
 				}

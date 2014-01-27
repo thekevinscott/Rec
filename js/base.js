@@ -20,21 +20,24 @@ define([
             }
             return this;
         },
-        signup: function(params) {
+        route: function(route, params) {
             this.render();
-
-            
-            if ( !this.signupView ) {
-                this.signupView = new signupView({ base: this });
+            if ( params.user ) {
+                this.state.set('user',user);
             }
-            
-            this.$application.html(this.signupView.render(params).el);
+            this[route](params);
+        },
+        signup: function(state) {
+            if ( !this.signupView ) {
+                this.signupView = new signupView( { base: this, state: state });
+            }
+            this.$application.html(this.signupView.render().el);
         },
         index: function() {
-            this.render();
+            
         },
         fourohfour: function() {
-            this.render();
+            
         }
     });
     return App;

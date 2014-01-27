@@ -1,10 +1,9 @@
 define([
 	'underscore',
 	'backbone',
-	'stackmob',
 	'q',
 	'text!templates/signup/pageTwo.html'
-	], function(_, Backbone, StackMob, Q, template){
+	], function(_, Backbone, Q, template){
 		
 		var PageView = Backbone.View.extend({
 			className: 'container page', 

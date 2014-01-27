@@ -3,9 +3,10 @@ define([
 	'backbone',
 	'q',
 	'views/signup/page',
+	'models/sport',
 	'text!templates/signup/pageThree.html',
 	'text!templates/signup/sport/tr.html'
-	], function(_, Backbone, Q, PageView, template, sportTemplate){
+	], function(_, Backbone, Q, PageView, SportModel, template, sportTemplate){
 		
 		var PageThreeView = PageView.extend({
 			className: 'container page pageThree', 
@@ -19,13 +20,16 @@ define([
 				
 				this.$el.html(_.template( template ));
 				this.$sports = this.$('.sports');
-				var sports = Parse.User.current().get('sports');
+				var user = this.base.state.get('user');
+				// debugger;
+				var sports = user.get('sport');
+				// debugger;
 				_.each(sports, function(sport){
-					
+					sport = new SportModel(sport);
 					var $sport = $(_.template( this.sportTemplate, { 
 						sport: { 
-							title: sport.title, 
-							slug: sport.title, 
+							title: sport.get('title'), 
+							slug: sport.slug(), 
 							competitive: parseInt(sport.competitive)
 						}
 					}));
