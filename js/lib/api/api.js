@@ -16,6 +16,10 @@ define([
 		var root = 'http://localhost:1337';
 		
 		var getUser = function() {
+			if ( localStorage && localStorage['rec-user'] ) {
+				var userAttbs = JSON.parse(localStorage['rec-user']);
+				return new UserModel(userAttbs);
+			}
 			return null;
 		};
 		

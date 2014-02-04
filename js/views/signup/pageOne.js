@@ -48,6 +48,7 @@ define([
 							view.parent.next();
 						},
 						error: function(model, xhr, options) {
+							alert('There was an error');
 							console.log('err',arguments);
 						}
 					})
