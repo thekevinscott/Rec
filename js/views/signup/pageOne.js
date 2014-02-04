@@ -39,15 +39,27 @@ define([
 				if (response.authResponse) {
 
 					var user = new API.User({ access_token: response.authResponse.accessToken });
+					var view = this;
 
-					debugger;
-					user.save().then(function(user){
-						this.base.state.set('user', user);
-						this.parent.next();
-					}.bind(this)).fail(function(err){
-						debugger;
-						console.log('err',err);
-					});
+					// debugger;
+					user.save(null,{
+						success: function(model, response, options) {
+							view.base.state.set('user',user);
+							view.parent.next();
+						},
+						error: function(model, xhr, options) {
+							console.log('err',arguments);
+						}
+					})
+					// user.save().then(function(response){
+					// 	// console.log('success a', response.attributes);
+					// 	user.set('token',response.attributes.token);
+					// 	view.base.state.set('user', user);
+					// 	view.parent.next();
+					// }).fail(function(err){
+
+					// 	console.log('err',err);
+					// });
 
 
 

@@ -58,6 +58,7 @@ define([
 				}
 			},
 			render: function(page){
+
 				if ( ! this.$compiledTemplate ) {
 					this.$compiledTemplate = _.template( template );
 					this.$el.html( this.$compiledTemplate );
@@ -88,7 +89,7 @@ define([
 					this.$headerView = new HeaderView({ parent: this });
 					this.$el.prepend(this.$headerView.render().el);
 				}
-
+				
 				this.currentPageView = new view({ parent: this, base: this.base });
 				this.$pages.append(this.currentPageView.render().el);
 
@@ -98,8 +99,9 @@ define([
 			next: function() {
 				var dfd = Q.defer();
 
-				this.currentPageView.validates().then(function(){
-					
+				
+				this.currentPageView.validates().then(function(){					
+
 					this.currentPage++;
 					this.render(this.currentPage);
 					dfd.resolve();

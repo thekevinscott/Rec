@@ -8,8 +8,9 @@ define([
 	'underscore',
 	'backbone',
 	'q',
-	'lib/api/user'
-], function(config, _, Backbone, Q, UserModel){
+	'lib/api/user',
+	'lib/api/collection',
+], function(config, _, Backbone, Q, UserModel, Collection){
 
 	return function() {
 		var root = 'http://localhost:1337';
@@ -22,7 +23,7 @@ define([
 			getUser : getUser,
 			User : UserModel,
 			Model : Backbone.Model,
-			Collection : Backbone.Collection
+			Collection : Collection
 		}
 	}();
 

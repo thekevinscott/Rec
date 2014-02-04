@@ -11,6 +11,7 @@ define([
 		var PageTwoView = PageView.extend({
 			className: 'container page pageTwo', 
 			initialize: function() {
+				
 				this.constructor.__super__.initialize.apply(this, arguments);
 				
 				this.sports = new SportsCollection();
