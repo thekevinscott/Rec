@@ -3,8 +3,9 @@ define([
     'underscore',
     'backbone',
     'views/signup/signup',
+    'views/index',
     'text!templates/application.html'
-], function(config, _, Backbone, signupView, applicationTemplate){
+], function(config, _, Backbone, signupView, indexView, applicationTemplate){
 
     var App = Backbone.View.extend({
         el: 'body',
@@ -36,6 +37,11 @@ define([
             this.$application.html(this.signupView.el);
         },
         index: function(params) {
+            if ( !this.indexView ) {
+                this.indexView = new indexView({ base: this });
+                this.indexView.render();
+            }
+            this.$application.html(this.indexView.el);
             console.log('here',params);
         },
         fourohfour: function() {
