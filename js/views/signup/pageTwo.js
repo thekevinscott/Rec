@@ -11,9 +11,8 @@ define([
 		var PageTwoView = PageView.extend({
 			className: 'container page pageTwo', 
 			initialize: function() {
-				
 				this.constructor.__super__.initialize.apply(this, arguments);
-				
+				// console.log('page two');
 				this.sports = new SportsCollection();
 				this.sports.fetch({
 					success: function(results) {
@@ -22,6 +21,7 @@ define([
 						console.log('error',err);
 					}
 				});
+
 			},
 			// WTF, WHY ??????
 			sportTemplate: sportTemplate,
@@ -34,7 +34,6 @@ define([
 				return this;
 			},
 			renderSports: function() {
-				
 				var user = this.base.state.get('user');
 				// debugger;
 				// console.log('user sports', user.get('sports'));
@@ -42,8 +41,12 @@ define([
 
 				// var userSports = user.get('sports');
 				_.each(this.sports.models, function(sport) {
+					
+					var selected = _.find(user.get('sports').models, function(obj){ 
+						
+						return ( obj.get('title') === sport.get('title') ); 
+					} ) ? true : false;
 
-					var selected = _.find(user.get('sport'), function(obj){ return ( obj.title === sport.get('title') ); } ) ? true : false;
 					var props = {
 						sport: _.extend(sport.attributes,{ 
 							slug: sport.slug(), 
@@ -68,8 +71,10 @@ define([
 				var inputs = this.$('input:checked');
 				if ( ! inputs.length ) {
 					dfd.reject('You must select at least one sport, dude. Come on.');
+				} else {
+					dfd.resolve();	
 				}
-				dfd.resolve();
+				
 
 				return dfd.promise;
 			},
@@ -107,36 +112,21 @@ define([
 					}.bind(this)
 				};
 
-				var user = new StackMob.User( { 
-					username: this.base.state.get('user').get('username')
-				});
+
+				var user = this.base.state.get('user');
+				
+
+
 				
 				if ( val ) {
-
-					user.appendAndSave('sport', [sport.get('sport_id')], callbacks);
-
+					user.get('sports').add([ sport ]);
 				} else {
-					
-					user.deleteAndSave('sport', [sport.get('sport_id')], StackMob.SOFT_DELETE, callbacks);
+					user.get('sports').remove(sport);
+					// user.deleteAndSave('sport', [sport.get('sport_id')], StackMob.SOFT_DELETE, callbacks);
 				}
+				// debugger;
+				user.save();
 				
-				
-				// // user.addRelationship('chores', [chore1, chore2, chore3], { ..success... });
-
-				// var user = Parse.User.current();
-				// if ( !user.get('sports') ) {
-				// 	user.set('sports',[]);
-				// }
-
-				// if ( val ) {
-				// 	user.get('sports').push({ title: sport.get('title'), competitive: 0 });
-				// } else {
-				// 	// var sports = _.filter(user.get('sports'), function(title) { return (sport.get('title') !== title) } );
-				// 	user.set('sports', []);
-					
-				// }
-				// user.save();
-
 			}
 		});
 	return PageTwoView;

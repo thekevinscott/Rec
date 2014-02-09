@@ -64,11 +64,11 @@ module.exports = function(grunt) {
     watch: {
       gruntfile: {
         files: 'Gruntfile.js',
-        tasks: ['jshint'],
+        tasks: [],
       },
       scripts: {
         files: ['js/**/*.js', '!js/lib/**/*.js'],
-        tasks: ['jshint','requirejs'],
+        tasks: ['requirejs'],
       },
       less: {
         files: 'less/**/*.less',
@@ -105,7 +105,7 @@ module.exports = function(grunt) {
 
 
   // grunt.registerTask('deploy', ['less','cssmin']);
-  grunt.registerTask('default', ['jshint','requirejs','less','cssmin','watch']);
+  grunt.registerTask('default', ['requirejs','less','cssmin','watch']);
   
   
 

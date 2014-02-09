@@ -3,43 +3,61 @@ define([
 	'backbone',
 	'q',
 	'views/signup/page',
+	'collections/locations',
 	'text!templates/signup/pageFour.html',
 	'text!templates/signup/location.html'
-	], function(_, Backbone, Q, PageView, template, locationTemplate){
+	], function(_, Backbone, Q, PageView, LocationsCollection, template, locationTemplate){
 		
 		var PageFourView = PageView.extend({
 			className: 'container page pageFour', 
 			initialize: function() {
 				this.constructor.__super__.initialize.apply(this, arguments);
+				
+				this.locations = new LocationsCollection();
+				this.locations.fetch({
+					success: function(results) {
+
+						this.renderLocations();
+					}.bind(this), error: function(err) {
+						console.log('error',err);
+					}
+				});
 			},
 			render: function(){
 				
 				this.$el.html(_.template( template ));
 				this.$locations = this.$('.locations');
 
+				
+				return this;
+			},
+			renderLocations: function() {
+
 				var user = this.base.state.get('user');
 				
-				if ( !user.get('locations') ) {
-					user.set('locations',[]);
-				}
 
-				var userLocations = user.get('locations');
+				// var userLocations = user.get('locations');
+				debugger;
+				_.each(this.locations.models, function(location){
+					var selected = _.find(user.get('locations').models, function(obj){ 
+						
+						return ( obj.get('title') === location.get('title') ); 
+					} ) ? true : false;
 
-				_.each(['Manhattan', 'Brooklyn', 'Queens', 'Bronx', 'Staten Island'], function(location){
-					location = _.extend({ title: location, selected: 0 });
-					$location = $(_.template( locationTemplate, { location: location } ));
+					$location = $(_.template( locationTemplate, _.extend(location.attributes,{ 
+						slug: location.slug(), 
+						selected: selected
+					})));
 					this.$locations.append($location);
 					
 					$location.click(function(e){
 
-						this.clickLocation($location, e);
+						this.clickLocation(e, location);
 					}.bind(this));
 
 				}.bind(this));
-				
-				return this;
 			},
-			clickLocation: function(location, e) {
+			clickLocation: function(e, location) {
 				var input;
 				if ( e.target.tagName !== 'INPUT' ) {
 					if ( e.target.tagName !== 'LI' ) {
@@ -51,11 +69,23 @@ define([
 					input = $(li.find('input'));
 
 					input.prop('checked', !input.prop('checked') );
+				} else {
+					var li = this;
 				}
 
-				input = location.find('input');
-				var val = input.val();
+				input = li.find('input');
+				var val = ( input.val() === 'on' ) ? 1 : 0 ;
+
+				
+				var user = this.base.state.get('user');
 				debugger;
+				if ( val ) {
+					user.get('locations').add([ location ]);
+				} else {
+					user.get('locations').remove(location);
+				}
+				// debugger;
+				user.save();
 
 
 			}

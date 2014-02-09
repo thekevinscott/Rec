@@ -3,12 +3,12 @@ define([
 	'api',
 ], function(Backbone, API){
 	// debugger;
-	var SportModel = Backbone.Model.extend({
+	var LocationModel = Backbone.Model.extend({
 		slug: function() {
-			console.log('this',this);
+			// console.log('this',this);
 			return this.get('title').toLowerCase().replace(' ','-');
 		}
 	});
-	return SportModel;
+	return LocationModel;
 });
 

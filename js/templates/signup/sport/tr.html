@@ -1,5 +1,5 @@
 <tr>
-	<td><i class="icon" /><h2><%= sport.title %></h2></td>
-	<td><input type="radio" name="<%= sport.slug %>" value="0" <% if (!sport.competitive) { %>checked="checked"<% } %> /></td>
-	<td><input type="radio" name="<%= sport.slug %>" value="1" <% if (sport.competitive) { %>checked="checked"<% } %> /></td>
+	<td><i class="icon" /><h2><%= title %></h2></td>
+	<td><input type="radio" name="<%= slug %>" value="0" <% if (competitive===0) { %>checked="checked"<% } %> /></td>
+	<td><input type="radio" name="<%= slug %>" value="1" <% if (competitive===1) { %>checked="checked"<% } %> /></td>
 </tr>

@@ -8,9 +8,10 @@ define([
 	'views/signup/pageTwo',
 	'views/signup/pageThree',
 	'views/signup/pageFour',
+	'views/signup/pageFive',
 	'text!templates/signup/index.html'
 	], function(_, Backbone, Q, config, HeaderView, 
-		PageOneView, PageTwoView, PageThreeView, PageFourView, template){
+		PageOneView, PageTwoView, PageThreeView, PageFourView, PageFiveView, template){
 
 		var SignupView = Backbone.View.extend({
 			className: 'signup',
@@ -24,13 +25,14 @@ define([
 					2 : PageTwoView,
 					3 : PageThreeView,
 					4 : PageFourView,
-					5 : 'pageFive',
+					5 : PageFiveView,
 					6 : 'pageSix'
 				};
 				this.route( opts.state );
 			},
 			route: function(state) {
 				var page;
+				
 
 				switch(state.code) {
 					case this.STATE.LOGIN :
@@ -40,6 +42,7 @@ define([
 						page = 2;
 					break;
 					case this.STATE.LOCATIONS :
+					
 						page = 4;
 					break;
 					case this.STATE.AVAILABILITY :
@@ -49,7 +52,7 @@ define([
 						page = 1;
 					break;
 				}
-
+				// console.log('route');
 				this.render(page);
 			},
 			setPageNumber: function(pageNum) {
@@ -58,7 +61,6 @@ define([
 				}
 			},
 			render: function(page){
-
 				if ( ! this.$compiledTemplate ) {
 					this.$compiledTemplate = _.template( template );
 					this.$el.html( this.$compiledTemplate );
@@ -73,7 +75,8 @@ define([
 					this.setPageNumber(page);	
 				}
 
-				if ( this.pages[this.currentPage] ) {
+				if ( this.pages[this.currentPage]) {
+
 					this.renderPage(this.pages[this.currentPage]);
 					this.base.router.navigate('signup/'+this.currentPage,{trigger: false});
 				} else {
@@ -89,6 +92,7 @@ define([
 					this.$headerView = new HeaderView({ parent: this });
 					this.$el.prepend(this.$headerView.render().el);
 				}
+
 				
 				this.currentPageView = new view({ parent: this, base: this.base });
 				this.$pages.append(this.currentPageView.render().el);

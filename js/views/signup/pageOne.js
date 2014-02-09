@@ -42,16 +42,16 @@ define([
 					var view = this;
 
 					// debugger;
-					user.save(null,{
-						success: function(model, response, options) {
+					user.save().then(function(model, response, options) {
+						// debugger;
 							view.base.state.set('user',user);
 							view.parent.next();
-						},
-						error: function(model, xhr, options) {
+					}.bind(this)).fail(function(model, xhr, options) {
+
 							alert('There was an error');
 							console.log('err',arguments);
-						}
-					})
+						
+					});
 					// user.save().then(function(response){
 					// 	// console.log('success a', response.attributes);
 					// 	user.set('token',response.attributes.token);

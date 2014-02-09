@@ -21,9 +21,11 @@ define([
             return this;
         },
         route: function(route, params) {
+            
             this.render();
             if ( params.user ) {
-                this.state.set('user',user);
+
+                this.state.set('user',params.user);
             }
             this[route](params);
         },
@@ -31,10 +33,10 @@ define([
             if ( !this.signupView ) {
                 this.signupView = new signupView( { base: this, state: state });
             }
-            this.$application.html(this.signupView.render().el);
+            this.$application.html(this.signupView.el);
         },
-        index: function() {
-            
+        index: function(params) {
+            console.log('here',params);
         },
         fourohfour: function() {
             

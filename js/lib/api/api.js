@@ -10,15 +10,22 @@ define([
 	'q',
 	'lib/api/user',
 	'lib/api/collection',
-], function(config, _, Backbone, Q, UserModel, Collection){
+	'lib/api/model',
+], function(config, _, Backbone, Q, UserModel, Collection, Model){
 
 	return function() {
 		var root = 'http://localhost:1337';
 		
 		var getUser = function() {
+			// return null; // hack for now;
 			if ( localStorage && localStorage['rec-user'] ) {
+				
 				var userAttbs = JSON.parse(localStorage['rec-user']);
-				return new UserModel(userAttbs);
+				if ( userAttbs && userAttbs.id ) {
+					
+					return new UserModel(userAttbs);	
+				}
+				
 			}
 			return null;
 		};

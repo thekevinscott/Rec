@@ -28,21 +28,21 @@ define([
 		var dfd = Q.defer();
 		
 		var user = API.getUser();
-
+		
 		// we have no user
 		if ( !user ) {
-			dfd.reject({ msg: 'Must register', code: config.constants.STATE.REGISTER });
+			dfd.reject({ msg: 'Must register', code: config.constants.STATE.REGISTER, user: user });
 		// we have a user but they have been logged out 
 		} else if ( !user.authenticated() ) {
-			dfd.reject({ msg: 'Session expired, must login', code: config.constants.STATE.LOGIN });
-		} else if ( !user.get('sports') || !user.get('sports').length ) {
-			dfd.reject({ msg: 'User must select sports', code: config.constants.STATE.SPORTS });
-		} else if ( !user.get('location') || !user.get('location').length ) {
-			dfd.reject({ msg: 'User must select location', code: config.constants.STATE.LOCATIONS });
+			dfd.reject({ msg: 'Session expired, must login', code: config.constants.STATE.LOGIN, user: user });
+		} else if ( !user.get('sports') || !user.get('sports').models ) {
+			dfd.reject({ msg: 'User must select sports', code: config.constants.STATE.SPORTS, user: user });
+		} else if ( !user.get('locations') || !user.get('locations').models ) {
+			dfd.reject({ msg: 'User must select location', code: config.constants.STATE.LOCATIONS, user: user });
 		} else if ( !user.get('availability') ) {
-			dfd.reject({ msg: 'User must select availability', code: config.constants.STATE.AVAILABILITY });
+			dfd.reject({ msg: 'User must select availability', code: config.constants.STATE.AVAILABILITY, user: user });
 		} else {
-			dfd.resolve();
+			dfd.resolve(user);
 		}
 
 		return dfd.promise;
@@ -126,9 +126,13 @@ define([
 	var AppRouter = Backbone.Router.extend({
 		routes: {
 			"signup/:page" : function(params) {
+				
 				getUser().then(function(user){
-					base.route('index',user);
+					// debugger;
+					// base.route('index',user);
+					base.router.navigate('/',{ trigger : true });
 				}).fail(function(state){
+					// console.log('base route signup');
 					// base.router.navigate('signup/'+state.page);
 					base.route('signup',state);
 				});
@@ -139,7 +143,6 @@ define([
 					base.route('index',user);
 				}).fail(function(state){
 					base.route('signup',state);
-					// base.router.navigate('signup/'+page,{ trigger : true });
 				});
 			},
 			"*actions":function(params){

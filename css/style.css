@@ -143,3 +143,6 @@ header .previous {
 header .next {
   float: right;
 }
+textarea {
+  width: 100%;
+}

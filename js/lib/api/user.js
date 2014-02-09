@@ -3,7 +3,9 @@ define([
 	'underscore',
 	'backbone',
 	'q',
-], function(config, _, Backbone, Q){
+	'collections/sports',
+	'collections/locations',
+], function(config, _, Backbone, Q, SportsCollection, LocationsCollection){
 
 	var User = Backbone.Model.extend({
 		url: function() {
@@ -12,8 +14,14 @@ define([
 		},
 		initialize: function( params ) {
 
+			this.set('sports', new SportsCollection(( params || {}).sports ));
+			this.set('locations', new LocationsCollection(( params || {}).locations ));
+
+			// debugger;
+			if ( params && params.access_token ) {
+				this.set('access_token',params.access_token);	
+			}
 			
-			this.set('access_token',params.access_token);
 			this.listenTo(this,'change',function(){
 				if ( localStorage ) {
 					localStorage['rec-user'] = JSON.stringify(this.attributes);
@@ -31,36 +39,36 @@ define([
 				}
 			}
 			return false;
+		},
+		save: function(attrs, opts) {
+			var dfd = new Q.defer();
+			if ( !attrs ) { attrs = {}; }
+			
+			// attrs.sports = [];
+			// _.each(this.attributes.sports.models,function(sport) {
+			// 	debugger;
+			// 	attrs.sports.push(sport.get('id'));
+			// });
+			Backbone.Model.prototype.save.call(this, attrs, {
+				success: function(model) {
+					// debugger;
+					if ( model && model.attributes.error && model.attributes.error.code === 190 ) {
+						// Backbone.history.navigate('/signup/1',true);
+						alert('you must login in again');
+					} else {
+						// model.set('sports', new SportsCollection(model.get('sports')));
+
+						// model.set('locations', new LocationsCollection(model.get('locations')));
+						dfd.resolve(model);	
+					}
+				},
+				error: function(data) {
+					dfd.reject(data);
+				}
+			});
+
+			return dfd.promise;
 		}
-		// save: function() {
-		// 	var dfd = Q.defer();
-			
-
-		// 	$.ajax({
-		// 		data: this.attributes,
-		// 		error: function(err) {
-					
-		// 		}
-		// 	});
-		// 	$.post(this.url(),this.attributes,function(data){
-
-		// 		console.log(data);
-		// 	});
-		// 	// debugger;
-		// 	// Backbone.Model.prototype.save.call(this, {}, {
-		// 	// 	success: function(data) {
-		// 	// 		// console.log('success',data);
-					
-		// 	// 		dfd.resolve(data);
-		// 	// 	},
-		// 	// 	error: function(err) {
-		// 	// 		// console.log('err', err);
-		// 	// 		dfd.reject(err);
-		// 	// 	}
-		// 	// });
-			
-		// 	return dfd.promise;
-		// }
 	});
 
 	return User;

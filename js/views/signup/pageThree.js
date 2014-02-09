@@ -13,6 +13,7 @@ define([
 			initialize: function() {
 				this.constructor.__super__.initialize.apply(this, arguments);
 				
+
 			},
 			// WTF, WHY ??????
 			sportTemplate: sportTemplate,
@@ -22,17 +23,19 @@ define([
 				this.$sports = this.$('.sports');
 				var user = this.base.state.get('user');
 				// debugger;
-				var sports = user.get('sport');
-				// debugger;
-				_.each(sports, function(sport){
-					sport = new SportModel(sport);
-					var $sport = $(_.template( this.sportTemplate, { 
-						sport: { 
-							title: sport.get('title'), 
-							slug: sport.slug(), 
-							competitive: parseInt(sport.competitive)
-						}
-					}));
+				var sports = user.get('sports');
+				
+				_.each(sports.models, function(sport){
+					// sport = new SportModel(sport);
+
+					// debugger;
+					var opts = { 
+						title: sport.get('title'), 
+						slug: sport.slug(), 
+						competitive: parseInt(sport.get('competitive'))
+					};
+
+					var $sport = $(_.template( this.sportTemplate, opts));
 
 					this.$sports.append( $sport );
 					$sport.find('input').click(function(e){
@@ -46,16 +49,22 @@ define([
 				// e.preventDefault();
 				// debugger;
 				
-				sport.competitive = $('input[name="'+e.target.name+'"]:checked').val();
+				// sport.competitive = $('input[name="'+e.target.name+'"]:checked').val();
 
-				var user = Parse.User.current();
-				var userSports = user.get('sports');
-				for (var i=0;i<userSports.length;i++) {
-					var userSport = userSports[i];
-					if ( userSport.title === sport.title ) {
-						user.get('sports')[i] = sport;
-					}
-				}
+				var user = this.base.state.get('user');
+				
+				user.get('sports').findWhere({ id : sport.id }).set('competitive',$('input[name="'+e.target.name+'"]:checked').val());
+				
+				
+
+				// var userSports = user.get('sports');
+
+				// for (var i=0;i<userSports.models.length;i++) {
+				// 	var userSport = userSports.models[i];
+				// 	if ( userSport.get('title') === sport.get('title') ) {
+				// 		user.get('sports').models[i].competitive = sport.competitive;
+				// 	}
+				// }
 				user.save();
 
 			}

@@ -1,13 +1,22 @@
 define([
 	'underscore',
+	'backbone',
 	'api',
 	'q',
+
 	'models/sport'
-], function(_, API, Q, SportModel){
+], function(_, Backbone, API, Q, SportModel){
 	
-	var SportsCollection = API.Collection.extend({
+	var SportsCollection = Backbone.Collection.extend({
 		name: 'sports',
-		model: SportModel
+		model: SportModel,
+		root: 'http://localhost:1337',
+		url: function() {
+			return this.root+'/'+this.name;
+		},
+		initialize: function() {
+			
+		}	
 	});
 	return SportsCollection;
 });
