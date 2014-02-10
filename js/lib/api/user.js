@@ -8,8 +8,6 @@ define([
 	'collections/locations',
 ], function(config, _, Backbone, Q, API, SportsCollection, LocationsCollection){
 	console.log('user');
-	// debugger;
-	// alert('SportsCollection is null; it should not be. Requirejs issue');
 	var User = API.Model.extend({
 		url: function() {
 

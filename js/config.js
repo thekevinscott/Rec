@@ -1,4 +1,7 @@
 define({
+	app: {
+		root: ( window.location.host === 'localhost' ) ? 'http://localhost:1337' : 'http://heroku-sails5.herokuapp.com/'
+	},
 	facebook: {
 		appId      : '131362800367499',
 		channelUrl : '//localhost/channel.html',

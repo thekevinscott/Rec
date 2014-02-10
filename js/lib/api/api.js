@@ -23,7 +23,7 @@ define([
 				var userAttbs = JSON.parse(localStorage['rec-user']);
 				if ( userAttbs && userAttbs.id ) {
 					
-					var user = new UserModel(userAttbs, { root : root });	
+					var user = new UserModel(userAttbs);
 					return user;
 				}
 				

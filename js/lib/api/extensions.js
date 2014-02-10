@@ -1,7 +1,9 @@
-define(['backbone'],function(Backbone){
-	console.log('extensions');
+define(['config','backbone'],function(config,Backbone){
+
 	return function() {
-		var root = 'http://localhost:1337';
+		// debugger;
+		console.log('extensions');
+		var root = config.app.root;
 		// BackboneUserModel.prototype.root = root;
 		Backbone.Model.prototype.root = root;
 		Backbone.Collection.prototype.root = root;
