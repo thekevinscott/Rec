@@ -27,8 +27,9 @@ define([
 		},
 
 		facebook: function() {
+			// debugger;
 			this.$dynamicContent.html('Loading');
-			var timeout = 5000; // 5 seconds
+			var timeout = 20000; // 20 seconds
 
 			var timer = setTimeout(function(){
 				this.error({ error: 'Timeout error' });

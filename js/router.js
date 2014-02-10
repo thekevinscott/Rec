@@ -7,6 +7,7 @@ define([
 	'q',
 	'base'
 ], function(config,$, _, Backbone, API, Q, Base){
+	
 	var base = new Base();
 	
 	// var getLoggedInUser = function() {

@@ -11,7 +11,8 @@ require.config({
 		// stackmob: 'lib/stackmob-js-0.9.2-bundled-min',
 		// facebook: '//connect.facebook.net/en_US/all',
 		facebook: 'lib/facebook/all',
-		api: 'lib/api/api'
+		api: 'lib/api/api',
+		// apiExtensions : 'lib/api/extensions'
 	},
 	shim: {
 		"backbone": {
@@ -28,6 +29,9 @@ require.config({
 		"facebook" : {
 			"exports": "FB"
 		},
+		// "apiExtensions" : {
+		// 	"exports": "apiExtensions"
+		// }
 		/*
 		'stackmob': {
 			deps: ['jquery', 'facebook'],
@@ -38,20 +42,13 @@ require.config({
 });
 
 require(['facebook', 'api', 'config'], function(FB, API, config) {
-	// // debugger;
-
-	// StackMob.init({
-	//     publicKey: "26ed40e3-c897-4c21-b252-e8878e812e33",
-	//     apiVersion: 0
-	// });
-	
 	FB.init(config.facebook);
-
 });
+
 require([
 	'fastclick',
 	'jquery',
-	'router',
+	'router'
 	
 ], function(Fastclick,$,Router){
 	

@@ -1,16 +1,16 @@
+
 define([
 	'underscore',
 	'backbone',
-	'api',
 	'q',
-
+	'lib/api/extensions',
 	'models/location'
-], function(_, Backbone, API, Q, LocationModel){
-	
-	var LocationsCollection = Backbone.Collection.extend({
-		name: 'locations',
+], function(_, Backbone, Q, API, LocationModel) {
+	// debugger;
+	console.log('locations collection');
+	var LocationsCollection = API.Collection.extend({
+		name: 'location',
 		model: LocationModel,
-		root: 'http://localhost:1337',
 		url: function() {
 			return this.root+'/'+this.name;
 		},

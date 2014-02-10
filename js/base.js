@@ -6,7 +6,7 @@ define([
     'views/index',
     'text!templates/application.html'
 ], function(config, _, Backbone, signupView, indexView, applicationTemplate){
-
+    
     var App = Backbone.View.extend({
         el: 'body',
         config: config,

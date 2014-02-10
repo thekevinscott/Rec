@@ -8,13 +8,13 @@ define([
 	'underscore',
 	'backbone',
 	'q',
+	'lib/api/extensions',
 	'lib/api/user',
-	'lib/api/collection',
-	'lib/api/model',
-], function(config, _, Backbone, Q, UserModel, Collection, Model){
 
+], function(config, _, Backbone, Q, apiExtensions, UserModel){
+	console.log('api');
+	// debugger;
 	return function() {
-		var root = 'http://localhost:1337';
 		
 		var getUser = function() {
 			// return null; // hack for now;
@@ -23,18 +23,20 @@ define([
 				var userAttbs = JSON.parse(localStorage['rec-user']);
 				if ( userAttbs && userAttbs.id ) {
 					
-					return new UserModel(userAttbs);	
+					var user = new UserModel(userAttbs, { root : root });	
+					return user;
 				}
 				
 			}
 			return null;
 		};
+
 		
 		return {
 			getUser : getUser,
 			User : UserModel,
-			Model : Backbone.Model,
-			Collection : Collection
+			Model : apiExtensions.Model,
+			Collection : apiExtensions.Collection
 		}
 	}();
 

@@ -3,17 +3,21 @@ define([
 	'underscore',
 	'backbone',
 	'q',
+	'lib/api/extensions',
 	'collections/sports',
 	'collections/locations',
-], function(config, _, Backbone, Q, SportsCollection, LocationsCollection){
-
-	var User = Backbone.Model.extend({
+], function(config, _, Backbone, Q, API, SportsCollection, LocationsCollection){
+	console.log('user');
+	// debugger;
+	// alert('SportsCollection is null; it should not be. Requirejs issue');
+	var User = API.Model.extend({
 		url: function() {
-			
-			return 'http://localhost:1337/users/create';
-		},
-		initialize: function( params ) {
 
+			return this.root+'/users/create';
+		},
+		initialize: function( params, opts ) {
+			console.log('SportsCollection',SportsCollection);
+			// debugger;
 			this.set('sports', new SportsCollection(( params || {}).sports ));
 			this.set('locations', new LocationsCollection(( params || {}).locations ));
 
