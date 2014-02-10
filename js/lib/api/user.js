@@ -32,15 +32,33 @@ define([
 			}.bind(this));
 		},
 		authenticated : function() {
-			var expiration = 60*60*24*7; // a week
-			// expiration = 1;
-			if ( localStorage && localStorage['rec-user-saved'] ) {
-				var saved = new Date(localStorage['rec-user-saved']);
-				if ( (new Date()).getTime() - saved.getTime() < expiration*1000) {
-					return true;
+			var dfd = Q.defer();
+			FB.getLoginStatus(function(response) {
+				if (response.status === 'connected') {
+			    	console.log('FB response', response);
+			    	var uid = response.authResponse.userID;
+			    	var accessToken = response.authResponse.accessToken;
+			    	dfd.resolve(response);
+				} else if (response.status === 'not_authorized') {
+					dfd.reject(response);
+			    	// the user is logged in to Facebook, 
+			    	// but has not authenticated your app
+				} else {
+					dfd.reject({});
+			    	// the user isn't logged in to Facebook.
 				}
-			}
-			return false;
+			});
+			return dfd.promise;
+
+			// var expiration = 60*60*24*7; // a week
+			// // expiration = 1;
+			// if ( localStorage && localStorage['rec-user-saved'] ) {
+			// 	var saved = new Date(localStorage['rec-user-saved']);
+			// 	if ( (new Date()).getTime() - saved.getTime() < expiration*1000) {
+			// 		return true;
+			// 	}
+			// }
+			// return false;
 		},
 		save: function(attrs, opts) {
 			var dfd = new Q.defer();

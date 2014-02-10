@@ -3,8 +3,7 @@ define({
 		root: ( window.location.host === 'localhost' ) ? 'http://localhost:1337' : 'http://heroku-sails5.herokuapp.com/'
 	},
 	facebook: {
-		appId      : '131362800367499',
-		channelUrl : '//localhost/channel.html',
+		appId	   : ( window.location.host === 'localhost' ) ? '131362800367499' : '647909491937242'
 		cookie     : true,
 		xfbml      : true
 	},

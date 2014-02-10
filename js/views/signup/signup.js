@@ -78,7 +78,7 @@ define([
 				if ( this.pages[this.currentPage]) {
 
 					this.renderPage(this.pages[this.currentPage]);
-					this.base.router.navigate('signup/'+this.currentPage,{trigger: false});
+					// this.base.router.navigate('signup/'+this.currentPage,{trigger: false});
 				} else {
 					console.log("err", "That page does not exist");
 				}
